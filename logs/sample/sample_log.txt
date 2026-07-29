@@ -1,0 +1,9 @@
+2026-07-29 22:00:01 LOGIN SUCCESS user=admin ip=192.168.1.10
+
+2026-07-29 22:01:15 LOGIN FAILED user=root ip=192.168.1.20
+
+2026-07-29 22:02:30 FILE DELETED user=admin file=secret.docx
+
+2026-07-29 22:03:44 USB CONNECTED device=Kingston
+
+2026-07-29 22:05:10 POWERSHELL EXECUTED user=Administrator
