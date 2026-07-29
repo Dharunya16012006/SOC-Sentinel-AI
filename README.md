@@ -1,1 +1,1 @@
-# SOC---Sentinel---AI
+# SOC-Sentinel-AI
