@@ -1,0 +1,152 @@
+/* ===========================================
+   CHRONOVISION
+   SOC Sentinel AI
+=========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial, Helvetica, sans-serif;
+
+    overflow:hidden;
+
+    background:#02030A;
+
+    color:white;
+
+}
+
+/* ========================= */
+
+#boot-screen{
+
+    width:100vw;
+    height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    position:relative;
+
+    background:
+    radial-gradient(circle at center,#1a1f4f 0%,#090b18 45%,#02030A 100%);
+
+}
+
+/* ========================= */
+
+.boot-container{
+
+    text-align:center;
+
+    z-index:10;
+
+}
+
+/* ========================= */
+
+.logo{
+
+    font-size:52px;
+
+    letter-spacing:10px;
+
+    margin-bottom:20px;
+
+    color:#8BE9FD;
+
+    text-shadow:
+    0 0 10px #00D9FF,
+    0 0 20px #00D9FF,
+    0 0 40px #00D9FF;
+
+}
+
+/* ========================= */
+
+.title{
+
+    font-size:90px;
+
+    color:#B388FF;
+
+    margin-bottom:20px;
+
+    text-shadow:
+    0 0 20px #7B2FF7,
+    0 0 50px #7B2FF7;
+
+}
+
+/* ========================= */
+
+.subtitle{
+
+    font-size:20px;
+
+    color:#C8D4FF;
+
+    margin-bottom:50px;
+
+}
+
+/* ========================= */
+
+.loading-box{
+
+    width:600px;
+
+    margin:auto;
+
+}
+
+#boot-text{
+
+    margin-bottom:15px;
+
+    font-size:18px;
+
+    color:#66F5FF;
+
+}
+
+/* ========================= */
+
+.progress-bar{
+
+    width:100%;
+
+    height:10px;
+
+    border-radius:50px;
+
+    overflow:hidden;
+
+    background:#1c2238;
+
+}
+
+/* ========================= */
+
+.progress{
+
+    width:30%;
+
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        #00D9FF,
+        #7B2FF7
+    );
+
+}
+
