@@ -69,6 +69,8 @@ class LogCollector:
         detector = DetectionEngine()
         ai = AIAnalyzer()
 
+        events = []
+
         try:
 
             with open(self.log_file, "r") as file:
@@ -84,7 +86,6 @@ class LogCollector:
 
                     event_type, severity = self.classify_event(log)
 
-                    # Create Security Event Object
                     event = SecurityEvent(
                         raw_log=log,
                         event_type=event_type,
@@ -97,7 +98,9 @@ class LogCollector:
                     # AI Analyzer
                     event = ai.analyze(event)
 
-                    # Summary Count
+                    # Store processed event
+                    events.append(event)
+
                     event_count[event.event_type] = (
                         event_count.get(event.event_type, 0) + 1
                     )
@@ -122,7 +125,7 @@ class LogCollector:
                 print("SOC Sentinel AI Summary")
                 print("=" * 60)
 
-                print(f"\nTotal Events : {len(logs)}\n")
+                print(f"\nTotal Events : {len(events)}\n")
 
                 print("Event Summary")
                 print("-" * 60)
@@ -138,8 +141,12 @@ class LogCollector:
 
                 print("=" * 60)
 
+                # Return all processed events
+                return events
+
         except FileNotFoundError:
             print("Log file not found.")
+            return []
 
 
 if __name__ == "__main__":

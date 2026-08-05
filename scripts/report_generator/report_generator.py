@@ -13,7 +13,7 @@ class ReportGenerator:
 
     def generate(self, events):
 
-        with open(self.report_path, "w") as report:
+        with open(self.report_path, "w", encoding="utf-8") as report:
 
             report.write("=" * 70 + "\n")
             report.write("SOC Sentinel AI Incident Report\n")
@@ -40,7 +40,8 @@ class ReportGenerator:
 
                 report.write("\n")
 
-        print("\n✅ Incident report generated successfully.")
-        print(f"📄 Report saved to: {self.report_path}")
-
-        
+        print("\n" + "=" * 70)
+        print("Incident Report Generated Successfully")
+        print("=" * 70)
+        print(f"Report Location : {self.report_path}")
+        print("=" * 70)

@@ -1,0 +1,49 @@
+======================================================================
+SOC Sentinel AI Incident Report
+======================================================================
+
+Total Events : 5
+
+----------------------------------------------------------------------
+Event #1
+Type            : Authentication Success
+Severity        : Low
+Raw Log         : 2026-07-29 22:00:01 LOGIN SUCCESS user=admin ip=192.168.1.10
+Explanation     : A successful user authentication was detected.
+Recommendation  : Verify that the login originated from an authorized user and a trusted device.
+
+----------------------------------------------------------------------
+Event #2
+Type            : Authentication Failure
+Severity        : Medium
+Raw Log         : 2026-07-29 22:01:15 LOGIN FAILED user=root ip=192.168.1.20
+Explanation     : Multiple failed login attempts may indicate a brute-force attack or invalid user credentials.
+Recommendation  : Review the source IP address, monitor repeated login failures, and enable Multi-Factor Authentication (MFA) if possible.
+
+----------------------------------------------------------------------
+Event #3
+Type            : File Activity
+Severity        : Medium
+Raw Log         : 2026-07-29 22:02:30 FILE DELETED user=admin file=secret.docx
+Alert           : ⚠ Sensitive File Activity
+Explanation     : A file deletion event was detected on the endpoint.
+Recommendation  : Confirm whether the file deletion was expected and review user activity around the event.
+
+----------------------------------------------------------------------
+Event #4
+Type            : USB Activity
+Severity        : Low
+Raw Log         : 2026-07-29 22:03:44 USB CONNECTED device=Kingston
+Alert           : ⚠ USB Device Connected
+Explanation     : A removable USB storage device was connected to the system.
+Recommendation  : Verify whether the USB device is authorized and monitor for possible data exfiltration.
+
+----------------------------------------------------------------------
+Event #5
+Type            : PowerShell Execution
+Severity        : High
+Raw Log         : 2026-07-29 22:05:10 POWERSHELL EXECUTED user=Administrator
+Alert           : ⚠ Suspicious PowerShell Activity
+Explanation     : PowerShell execution was detected. While PowerShell is commonly used by administrators, attackers also use it for malware execution and post-exploitation activities.
+Recommendation  : Review the executed PowerShell command, verify the user account, and investigate any unusual script activity.
+
