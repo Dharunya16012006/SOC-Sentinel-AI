@@ -11,11 +11,27 @@ import sys
 # Import Detection Engine
 sys.path.append(
     os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..", "detection-engine")
+        os.path.join(os.path.dirname(__file__), "..", "detection_engine")
+    )
+)
+
+# Import AI Analyzer
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "ai-analyzer")
+    )
+)
+
+# Import Security Event Model
+sys.path.append(
+    os.path.abspath(
+        os.path.join(os.path.dirname(__file__), "..", "..", "models")
     )
 )
 
 from detector import DetectionEngine
+from incident_ai import AIAnalyzer
+from security_event import SecurityEvent
 
 
 class LogCollector:
@@ -47,10 +63,11 @@ class LogCollector:
 
         print("=" * 60)
         print("SOC Sentinel AI")
-        print("Log Collection, Classification & Detection Engine")
+        print("Log Collection, Classification, Detection & AI Analysis")
         print("=" * 60)
 
         detector = DetectionEngine()
+        ai = AIAnalyzer()
 
         try:
 
@@ -60,34 +77,46 @@ class LogCollector:
 
                 print(f"\nTotal Logs Found : {len(logs)}\n")
 
-                # Summary dictionaries
                 event_count = {}
                 severity_count = {}
 
-                # Process every log
                 for count, log in enumerate(logs, start=1):
 
-                    event, severity = self.classify_event(log)
+                    event_type, severity = self.classify_event(log)
 
-                    # Send event to Detection Engine
-                    alert = detector.analyze(event)
+                    # Create Security Event Object
+                    event = SecurityEvent(
+                        raw_log=log,
+                        event_type=event_type,
+                        severity=severity
+                    )
 
-                    # Count events
-                    event_count[event] = event_count.get(event, 0) + 1
-                    severity_count[severity] = severity_count.get(severity, 0) + 1
+                    # Detection Engine
+                    event = detector.analyze(event)
+
+                    # AI Analyzer
+                    event = ai.analyze(event)
+
+                    # Summary Count
+                    event_count[event.event_type] = (
+                        event_count.get(event.event_type, 0) + 1
+                    )
+
+                    severity_count[event.severity] = (
+                        severity_count.get(event.severity, 0) + 1
+                    )
 
                     print("-" * 60)
                     print(f"Event #{count}")
-                    print(f"Type      : {event}")
-                    print(f"Severity  : {severity}")
-                    print(f"Raw Log   : {log}")
+                    print(f"Type            : {event.event_type}")
+                    print(f"Severity        : {event.severity}")
+                    print(f"Raw Log         : {event.raw_log}")
 
-                    if alert:
-                        print(f"Alert     : {alert}")
+                    if event.alert:
+                        print(f"Alert           : {event.alert}")
 
-                # ==========================
-                # Summary
-                # ==========================
+                    print(f"AI Explanation  : {event.explanation}")
+                    print(f"Recommendation  : {event.recommendation}")
 
                 print("\n" + "=" * 60)
                 print("SOC Sentinel AI Summary")
@@ -98,14 +127,14 @@ class LogCollector:
                 print("Event Summary")
                 print("-" * 60)
 
-                for event, count in event_count.items():
-                    print(f"{event:<30} : {count}")
+                for event_name, total in event_count.items():
+                    print(f"{event_name:<30} : {total}")
 
                 print("\nSeverity Summary")
                 print("-" * 60)
 
-                for severity, count in severity_count.items():
-                    print(f"{severity:<30} : {count}")
+                for severity_name, total in severity_count.items():
+                    print(f"{severity_name:<30} : {total}")
 
                 print("=" * 60)
 
@@ -116,3 +145,5 @@ class LogCollector:
 if __name__ == "__main__":
     collector = LogCollector()
     collector.run()
+
+    
